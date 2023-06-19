@@ -1,5 +1,23 @@
 <script setup lang="ts">
+import CurrentFileList, { CurrentFileItem } from "./CurrentFileList.vue";
 
+const currentImages: CurrentFileItem[] = [
+	{ fileName: "test1.jpg", filePath: "/Users/user1/Pictures/" },
+	{ fileName: "test2.jpg", filePath: "/Users/user1/Pictures/" },
+	{ fileName: "test3.jpg", filePath: "/Users/user1/Pictures/" },
+];
+
+const currentVideos: CurrentFileItem[] = [
+	{ fileName: "test1.mp4", filePath: "/Users/user1/Movies/" },
+	{ fileName: "test2.mp4", filePath: "/Users/user1/Movies/" },
+	{ fileName: "test3.mp4", filePath: "/Users/user1/Movies/" },
+];
+
+const currentAudios: CurrentFileItem[] = [
+	{ fileName: "test1.mp3", filePath: "/Users/user1/Music/" },
+	{ fileName: "test2.mp3", filePath: "/Users/user1/Music/" },
+	{ fileName: "test3.mp3", filePath: "/Users/user1/Music/" },
+];
 </script>
 
 
@@ -21,15 +39,15 @@
 			</div>
 			<div>
 				<h3>イメージ</h3>
-
+				<CurrentFileList :items="currentImages"/>
 			</div>
 			<div>
 				<h3>ビデオ</h3>
-
+				<CurrentFileList :items="currentVideos"/>
 			</div>
 			<div>
 				<h3>オーディオ</h3>
-
+				<CurrentFileList :items="currentAudios"/>
 			</div>
 			<div>
 				<button>履歴を削除</button>

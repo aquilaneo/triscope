@@ -24,12 +24,16 @@ const currentAudios: CurrentFileItem[] = [
 <template>
 	<div class="top">
 		<section class="top__panel top__panel--left">
-			<div>
+			<div class="title">
 				<h1>triscope</h1>
 				<div>ver 1.0.0</div>
 			</div>
-			<div>
+			<div class="open-file">
+				<div class="open-file__button">
+					<div>ファイルを開く</div>
+				</div>
 
+				<div>またはここにドラッグ&ドロップ</div>
 			</div>
 		</section>
 

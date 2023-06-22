@@ -1,19 +1,31 @@
 <script setup lang="ts">
-import CurrentFileList, { CurrentFileItem } from "./CurrentFileList.vue";
+import RecentFileList, { CurrentFileItem } from "./RecentFileList.vue";
 
-const currentImages: CurrentFileItem[] = [
+const recentImages: CurrentFileItem[] = [
 	{ fileName: "test1.jpg", filePath: "/Users/user1/Pictures/" },
 	{ fileName: "test2.jpg", filePath: "/Users/user1/Pictures/" },
 	{ fileName: "test3.jpg", filePath: "/Users/user1/Pictures/" },
 ];
 
-const currentVideos: CurrentFileItem[] = [
+const recentVideos: CurrentFileItem[] = [
+	{ fileName: "test1.mp4", filePath: "/Users/user1/Movies/" },
+	{ fileName: "test2.mp4", filePath: "/Users/user1/Movies/" },
+	{ fileName: "test3.mp4", filePath: "/Users/user1/Movies/" },
+	{ fileName: "test1.mp4", filePath: "/Users/user1/Movies/" },
+	{ fileName: "test2.mp4", filePath: "/Users/user1/Movies/" },
+	{ fileName: "test3.mp4", filePath: "/Users/user1/Movies/" },
+	{ fileName: "test1.mp4", filePath: "/Users/user1/Movies/" },
+	{ fileName: "test2.mp4", filePath: "/Users/user1/Movies/" },
+	{ fileName: "test3.mp4", filePath: "/Users/user1/Movies/" },
+	{ fileName: "test1.mp4", filePath: "/Users/user1/Movies/" },
+	{ fileName: "test2.mp4", filePath: "/Users/user1/Movies/" },
+	{ fileName: "test3.mp4", filePath: "/Users/user1/Movies/" },
 	{ fileName: "test1.mp4", filePath: "/Users/user1/Movies/" },
 	{ fileName: "test2.mp4", filePath: "/Users/user1/Movies/" },
 	{ fileName: "test3.mp4", filePath: "/Users/user1/Movies/" },
 ];
 
-const currentAudios: CurrentFileItem[] = [
+const recentAudios: CurrentFileItem[] = [
 	{ fileName: "test1.mp3", filePath: "/Users/user1/Music/" },
 	{ fileName: "test2.mp3", filePath: "/Users/user1/Music/" },
 	{ fileName: "test3.mp3", filePath: "/Users/user1/Music/" },
@@ -25,33 +37,33 @@ const currentAudios: CurrentFileItem[] = [
 	<div class="top">
 		<section class="top__panel top__panel--left">
 			<div class="title">
-				<h1>triscope</h1>
-				<div>ver 1.0.0</div>
+				<h1 class="title__text">triscope</h1>
+				<div class="title__version">ver 1.0.0</div>
 			</div>
 			<div class="open-file">
-				<div class="open-file__button">
-					<div>ファイルを開く</div>
-				</div>
+				<button class="open-file__button">ファイルを開く</button>
 
 				<div>またはここにドラッグ&ドロップ</div>
 			</div>
 		</section>
 
 		<section class="top__panel top__panel--right">
-			<div>
-				<h2>最近開いたファイル</h2>
+			<div class="recent-files__header">
+				<h2 class="header__text">最近開いたファイル</h2>
 			</div>
-			<div class="current-file-list__item">
-				<h3>イメージ</h3>
-				<CurrentFileList :items="currentImages"/>
+			<div class="recent-files__type">
+				<h3 class="type__name">
+					<span>イメージ</span>
+				</h3>
+				<RecentFileList :items="recentImages"/>
 			</div>
-			<div class="current-file-list__item">
-				<h3>ビデオ</h3>
-				<CurrentFileList :items="currentVideos"/>
+			<div class="recent-files__type">
+				<h3 class="type__name">ビデオ</h3>
+				<RecentFileList :items="recentVideos"/>
 			</div>
-			<div class="current-file-list__item">
-				<h3>オーディオ</h3>
-				<CurrentFileList :items="currentAudios"/>
+			<div class="recent-files__type">
+				<h3 class="type__name">オーディオ</h3>
+				<RecentFileList :items="recentAudios"/>
 			</div>
 			<div>
 				<button>履歴を削除</button>
@@ -67,7 +79,7 @@ const currentAudios: CurrentFileItem[] = [
 	height: 100%;
 	padding: 1rem 0;
 
-	background-color: #FAFAFA;
+	background-color: var(--background-color);
 
 	display: flex;
 	box-sizing: border-box;
@@ -80,7 +92,7 @@ const currentAudios: CurrentFileItem[] = [
 }
 
 .top__panel:not(:last-child) {
-	border-right: solid var(--main-color) thin;
+	border-right: solid var(--sub-color) thin;
 }
 
 .top__panel--left {
@@ -92,7 +104,16 @@ const currentAudios: CurrentFileItem[] = [
 .title {
 	width: 100%;
 	text-align: center;
-	margin-bottom: 4rem;
+	margin-bottom: 5rem;
+}
+
+.title__text {
+	font-size: 4rem;
+	font-weight: bold;
+}
+
+.title__version {
+	color: var(--sub-color);
 }
 
 .open-file {
@@ -104,16 +125,32 @@ const currentAudios: CurrentFileItem[] = [
 	width: 8rem;
 	height: 8rem;
 	margin: 0 auto 1rem auto;
-	border: solid var(--main-color) thin;
-	border-radius: 0.4rem;
 }
 
 .top__panel--right {
 	display: grid;
-	grid-template-rows: 2rem 1fr 1fr 1fr 2rem;
+	grid-template-rows: 1.5rem 1fr 1fr 1fr 1.5rem;
 }
 
-.current-file-list__item:not(:last-child) {
-	border-bottom: solid var(--main-color) thin;
+.header__text {
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+
+.type__name {
+	font-weight: bold;
+}
+
+.recent-files__type {
+	padding: 0.5rem 0;
+	box-sizing: border-box;
+
+	display: grid;
+	grid-template-rows: 1.5rem 1fr;
+	overflow: hidden;
+}
+
+.recent-files__type:not(:last-child) {
+	border-bottom: solid var(--sub-color) thin;
 }
 </style>

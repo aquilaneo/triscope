@@ -1,5 +1,7 @@
 :root {
     --main-color: #4D4D4D;
+    --sub-color: #BBBBBB;
+    --background-color: #FAFAFA;
 }
 
 body {
@@ -9,4 +11,17 @@ body {
     user-select: none;
     -webkit-user-select: none;
     cursor: default;
+}
+
+button {
+    background-color: unset;
+    border: solid var(--sub-color) thin;
+    border-radius: 0.3em;
+    font-size: 1rem;
+}
+
+.inline-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin: 0 0.1rem;
 }

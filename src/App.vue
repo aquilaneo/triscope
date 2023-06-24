@@ -24,7 +24,7 @@ async function onFileSelected(inputFile: File) {
 		<Top :onFileSelected="onFileSelected" v-if="fileType === FileType.NotSet"/>
 
 		<!-- 画像ビューアー -->
-		<ImageViewer v-if="fileType === FileType.Image"/>
+		<ImageViewer v-if="fileType === FileType.Image" :fileDataUrl="fileDataUrl"/>
 	</div>
 </template>
 

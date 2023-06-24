@@ -1,10 +1,15 @@
 <script setup lang="ts">
-
+const props = defineProps({
+	fileDataUrl: {
+		type: String,
+		required: true,
+	}
+});
 </script>
 
 <template>
 	<div class="image-viewer">
-		<img src="../../../public/samples/test.jpg" class="image-viewer__image">
+		<img :src="props.fileDataUrl" class="image-viewer__image">
 	</div>
 </template>
 

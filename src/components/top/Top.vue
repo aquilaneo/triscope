@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import RecentFileList, { CurrentFileItem } from "./RecentFileList.vue";
+import { ref } from "vue";
 
+// ダミーデータ
 const recentImages: CurrentFileItem[] = [
 	{ fileName: "test1.jpg", filePath: "/Users/user1/Pictures/" },
 	{ fileName: "test2.jpg", filePath: "/Users/user1/Pictures/" },
@@ -30,6 +32,31 @@ const recentAudios: CurrentFileItem[] = [
 	{ fileName: "test2.mp3", filePath: "/Users/user1/Music/" },
 	{ fileName: "test3.mp3", filePath: "/Users/user1/Music/" },
 ];
+
+// props定義
+const props = defineProps({
+	onFileSelected: {
+		type: Function,
+		required: true,
+	}
+});
+
+// data定義
+const fileInput = ref<HTMLInputElement>();
+
+// イベント
+function openFileDialog() {
+	fileInput.value?.click();
+}
+
+function onFileChanged() {
+	if (!fileInput.value || !fileInput.value.files) {
+		return;
+	}
+
+	// 入力したFileを親コンポーネントに渡す
+	props.onFileSelected(fileInput.value.files[0]);
+}
 </script>
 
 
@@ -41,7 +68,9 @@ const recentAudios: CurrentFileItem[] = [
 				<div class="title__version">ver 1.0.0</div>
 			</div>
 			<div class="open-file">
-				<button class="open-file__button">ファイルを開く</button>
+				<button class="open-file__button" @click="openFileDialog">ファイルを開く</button>
+				<input type="file" class="hidden" ref="fileInput" accept="image/*, audio/*, video/*"
+					   @change="onFileChanged">
 
 				<div>またはここにドラッグ&ドロップ</div>
 			</div>

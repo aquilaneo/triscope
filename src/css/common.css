@@ -25,3 +25,7 @@ button {
     height: 1.2rem;
     margin: 0 0.1rem;
 }
+
+.hidden {
+    display: none;
+}

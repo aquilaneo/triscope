@@ -3,6 +3,7 @@ import { ref } from "vue";
 
 import Top from "./components/top/Top.vue";
 import ImageViewer from "./components/image-viewr/ImageViewer.vue";
+import VideoViewer from "./components/video-viewer/VideoViewer.vue";
 import { FileType } from "./js/types";
 import { detectFileType, readFileAsDataURL } from "./js/common";
 
@@ -25,6 +26,11 @@ async function onFileSelected(inputFile: File) {
 
 		<!-- 画像ビューアー -->
 		<ImageViewer v-if="fileType === FileType.Image" :fileDataUrl="fileDataUrl"/>
+
+		<!-- 動画ビューアー -->
+		<!--<VideoViewer v-if="fileType === FileType.Video" :fileDataUrl="fileDataUrl"/>-->
+
+		<video :src="fileDataUrl"></video>
 	</div>
 </template>
 

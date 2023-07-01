@@ -1,31 +1,13 @@
 import { FileType } from "./types";
 
-// DataURLとしてFileを読み込みDataURLにする
-export async function readFileAsDataURL(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-        const fileReader = new FileReader();
-
-        // 読み込み成功イベント
-        fileReader.onload = () => {
-            if (!fileReader.result || typeof (fileReader.result) !== "string") {
-                reject();
-                return;
-            }
-
-            resolve(fileReader.result);
-        };
-
-        // 読み込み失敗イベント
-        fileReader.onerror = () => {
-            reject();
-        };
-
-        fileReader.readAsDataURL(file);
-    });
+// BlobとしてfileUrlを読み込む
+export async function readFileAsBlob(fileUrl: string): Promise<Blob> {
+    const response = await fetch(fileUrl);
+    return await response.blob();
 }
 
-// ファイルタイプを判断する
-export function detectFileType(file: File): FileType {
+// Blobからファイルタイプを判断する
+export function detectFileType(fileBlob: Blob): FileType {
     // ファイルタイプ定義
     const typeNameFileTypePairs: { fileType: FileType, typeName: string }[] = [
         { fileType: FileType.Image, typeName: "image" },
@@ -35,7 +17,7 @@ export function detectFileType(file: File): FileType {
 
     // 該当するファイルタイプを見つける
     const foundPair = typeNameFileTypePairs.find((pair) => {
-        return file.type.includes(pair.typeName);
+        return fileBlob.type.includes(pair.typeName);
     });
 
     // 該当するものがなければUnknownとして返す

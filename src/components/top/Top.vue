@@ -107,7 +107,7 @@ async function openFileDialog() {
 	height: 100%;
 	padding: 1rem 0;
 
-	background-color: var(--background-color);
+	background-color: var(--main-background-color);
 
 	display: flex;
 	box-sizing: border-box;

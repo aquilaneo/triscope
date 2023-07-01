@@ -15,7 +15,7 @@ const props = defineProps({
 
 <style scoped>
 .video-viewer {
-	background-color: var(--background-color);
+	background-color: var(--media-background-color);
 	width: 100vw;
 	height: 100vh;
 	overflow: hidden;

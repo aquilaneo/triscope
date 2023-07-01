@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps({
-	fileDataUrl: {
+	fileBlobUrl: {
 		type: String,
 		required: true,
 	}
@@ -9,7 +9,7 @@ const props = defineProps({
 
 <template>
 	<div class="video-viewer">
-		<video :src="props.fileDataUrl" class="video-viewer__video" controls></video>
+		<video :src="props.fileBlobUrl" class="video-viewer__video" controls></video>
 	</div>
 </template>
 

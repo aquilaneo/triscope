@@ -5,17 +5,17 @@ import Top from "./components/top/Top.vue";
 import ImageViewer from "./components/image-viewr/ImageViewer.vue";
 import VideoViewer from "./components/video-viewer/VideoViewer.vue";
 import { FileType } from "./js/types";
-import { detectFileType, readFileAsDataURL } from "./js/common";
+import { detectFileType, readFileAsBlob } from "./js/common";
 
 // data定義
-const file = ref<File | null>(null);
 const fileType = ref<FileType>(FileType.NotSet);
-const fileDataUrl = ref<string>("");
+const fileBlobUrl = ref<string>("");
 
 // ファイル選択時
-async function onFileSelected(inputFile: File) {
-	fileType.value = detectFileType(inputFile);
-	fileDataUrl.value = await readFileAsDataURL(inputFile);
+async function onFileSelected(fileUrl: string) {
+	const fileBlob = await readFileAsBlob(fileUrl);
+	fileBlobUrl.value = URL.createObjectURL(fileBlob);
+	fileType.value = detectFileType(fileBlob);
 }
 </script>
 
@@ -25,12 +25,10 @@ async function onFileSelected(inputFile: File) {
 		<Top :onFileSelected="onFileSelected" v-if="fileType === FileType.NotSet"/>
 
 		<!-- 画像ビューアー -->
-		<ImageViewer v-if="fileType === FileType.Image" :fileDataUrl="fileDataUrl"/>
+		<ImageViewer v-if="fileType === FileType.Image" :fileBlobUrl="fileBlobUrl"/>
 
 		<!-- 動画ビューアー -->
-		<!--<VideoViewer v-if="fileType === FileType.Video" :fileDataUrl="fileDataUrl"/>-->
-
-		<video :src="fileDataUrl"></video>
+		<VideoViewer v-if="fileType === FileType.Video" :fileBlobUrl="fileBlobUrl"/>
 	</div>
 </template>
 

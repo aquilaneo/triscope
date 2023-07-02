@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import RecentFileList, { CurrentFileItem } from "./RecentFileList.vue";
 
-import * as TauriDialog from "@tauri-apps/api/dialog";
-import * as Tauri from "@tauri-apps/api/tauri";
+import * as TauriAPI from "@tauri-apps/api/tauri";
+import * as TauriAPIDialog from "@tauri-apps/api/dialog";
+import * as TauriAPIEvent from '@tauri-apps/api/event'
 
 // ダミーデータ
 const recentImages: CurrentFileItem[] = [
@@ -44,19 +45,36 @@ const props = defineProps({
 });
 
 // ダイアログからファイルを開く
-async function openFileDialog() {
+async function showFileDialog() {
 	// ダイアログを開く
-	const filePath = await TauriDialog.open({
+	const filePath = await TauriAPIDialog.open({
 		multiple: false,
 		title: "Select a media file"
 	});
 
-	if (typeof(filePath) !== "string") {
+	if (typeof (filePath) !== "string") {
 		return;
 	}
 
+	// ファイルを開く
+	openFile(filePath);
+}
+
+// ドラッグ&ドロップからファイルを開く
+TauriAPIEvent.listen(TauriAPIEvent.TauriEvent.WINDOW_FILE_DROP, (event) => {
+	const filePaths = event.payload as string[];
+	if (filePaths.length === 0) {
+		return;
+	}
+
+	// ファイルを開く
+	openFile(filePaths[0]);
+});
+
+// ファイルを開く
+function openFile(filePath: string) {
 	// WebViewで読める形式にファイルパスを変換
-	const fileUrl = Tauri.convertFileSrc(filePath);
+	const fileUrl = TauriAPI.convertFileSrc(filePath);
 	props.onFileSelected(fileUrl);
 }
 </script>
@@ -70,7 +88,7 @@ async function openFileDialog() {
 				<div class="title__version">ver 1.0.0</div>
 			</div>
 			<div class="open-file">
-				<button class="open-file__button" @click="openFileDialog">ファイルを開く</button>
+				<button class="open-file__button" @click="showFileDialog">ファイルを開く</button>
 				<div>またはここにドラッグ&ドロップ</div>
 			</div>
 		</section>
